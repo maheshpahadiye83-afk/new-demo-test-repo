@@ -23,7 +23,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-node-version: '20'
-        cache: 'npm'
+
 
     # Safe installation of dependencies based on lockfile
     - name: Install dependencies

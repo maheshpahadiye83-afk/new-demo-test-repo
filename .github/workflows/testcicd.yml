@@ -3,7 +3,7 @@ name: CI/CD Pipeline Example
 # 1. Triggers: Define what events start the pipeline
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "test" ]
   pull_request:
     branches: [ "main" ]
 

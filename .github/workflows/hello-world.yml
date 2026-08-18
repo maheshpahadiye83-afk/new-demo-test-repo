@@ -15,3 +15,6 @@ jobs:
 
       - name: Say hello
         run: echo "Hello, world from mahi tech world!!"
+        
+      - name: Say goood bye
+        run: echo "Good bye , world from mahi tech world!!"

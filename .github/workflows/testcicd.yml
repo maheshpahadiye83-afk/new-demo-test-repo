@@ -1,0 +1,63 @@
+name: CI/CD Pipeline Example
+
+# 1. Triggers: Define what events start the pipeline
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# 2. Jobs: Define parallel or sequential stages
+jobs:
+  # The Continuous Integration (CI) Stage
+  continuous-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Pulls the repository code onto the runner machine
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    # Installs Node.js runtime environment
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-node-version: '20'
+        cache: 'npm'
+
+    # Safe installation of dependencies based on lockfile
+    - name: Install dependencies
+      run: npm ci
+
+    # Check for formatting and syntax standards
+    - name: Run Linter
+      run: npm run lint --if-present
+
+    # Execute unit/integration tests
+    - name: Run Tests
+      run: npm test
+
+    # Compile or build production assets
+    - name: Build Application
+      run: npm run build --if-present
+
+  # The Continuous Deployment (CD) Stage
+  continuous-deployment:
+    runs-on: ubuntu-latest
+    # Requires the CI job to complete successfully before running
+    needs: continuous-integration
+    # Ensures deployment only occurs on direct pushes to the main branch
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    # Dummy deployment step (Replace with your actual SSH, AWS, or Vercel commands)
+    - name: Deploy to Staging/Production Server
+      env:
+        DEPLOY_TOKEN: ${{ secrets.DEPLOY_API_TOKEN }}
+      run: |
+        echo "Initiating deployment sequence..."
+        echo "Deploying applications with token reference..."
+        # Example: curl -X POST https://hostingprovider.com

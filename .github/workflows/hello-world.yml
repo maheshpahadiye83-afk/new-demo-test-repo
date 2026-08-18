@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Say hello
-        run: echo "Hello, world from GitHub Actions!"
+        run: echo "Hello, world from mahi tech world!!"

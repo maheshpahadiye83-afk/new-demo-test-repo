@@ -22,12 +22,13 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-node-version: '20'
+        node-version: '20'
 
 
     # Safe installation of dependencies based on lockfile
     - name: Install dependencies
-      run: npm ci
+      run: npm ci || npm install
+      if: hashFiles('package-lock.json', 'npm-shrinkwrap.json', 'yarn.lock') != ''
 
     # Check for formatting and syntax standards
     - name: Run Linter
